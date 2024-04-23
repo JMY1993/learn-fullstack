@@ -1,8 +1,9 @@
 import Note from "./components/Note";
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
-const App = ({ initNotes }) => {
-  const [notes, setNotes] = useState(initNotes);
+const App = () => {
+  const [notes, setNotes] = useState([]);
 
   const [currentNote, setCurrentNote] = useState({
     id: notes.length + 1,
@@ -21,10 +22,10 @@ const App = ({ initNotes }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (currentNote.content != "") {
-      setNotes([...notes, currentNote]);
+      setNotes([...notes, { ...currentNote, id: notes.length + 1 }]);
       setCurrentNote({
+        ...currentNote,
         content: "",
-        id: notes.length + 2,
         important: Math.random() < 0.5,
       });
     } else {
@@ -35,11 +36,20 @@ const App = ({ initNotes }) => {
   const toggleShowAll = () => {
     setShowAll(!showAll);
   };
+  useEffect(() => {
+    console.log("effect");
+    axios.get("http://localhost:3001/notes").then((res) => {
+      console.log("promise fulfilled");
+      setNotes(res.data);
+    });
+  }, []);
 
   return (
     <div>
       <h1>Notes</h1>
-      <button onClick={toggleShowAll}>show {showAll?"important":"all"}</button>
+      <button onClick={toggleShowAll}>
+        show {showAll ? "important" : "all"}
+      </button>
       <ul>
         {notesToShow.map((note) => (
           <Note key={note.id} note={note} />
