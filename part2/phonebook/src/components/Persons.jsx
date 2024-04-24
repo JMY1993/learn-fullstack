@@ -1,4 +1,4 @@
-const Persons = ({ persons, filterChar }) => {
+const Persons = ({ persons, filterChar, removePersonWithID }) => {
   const shownPersons =
     filterChar === ""
       ? persons
@@ -11,6 +11,7 @@ const Persons = ({ persons, filterChar }) => {
       {shownPersons.map((person) => (
         <div key={person.id}>
           {person.name}: {person.number}
+          <button onClick={removePersonWithID(person.id)}>delete</button>
         </div>
       ))}
     </div>
