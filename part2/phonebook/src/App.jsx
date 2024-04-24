@@ -18,25 +18,27 @@ const App = () => {
 
   const handleSubmit = (name, number) => (e) => {
     e.preventDefault();
+    let allPeople = [...persons]
+    const alreadyExist = allPeople.some((person) => person.name === name);
     if (
-      persons.some(
-        (person) =>
-          person.name === name &&
-          !window.confirm(
-            `${name} is already added to phonebook, replace the old number with a new one?`
-          )
+      alreadyExist &&
+      !window.confirm(
+        `${name} is already added to phonebook, replace the old number with a new one?`
       )
-    ) {
-      return;
+    ) return;
+
+    if (alreadyExist) {
+      const removeId = persons.find((person) => person.name === name).id
+      phonebookService.remove(removeId);
+      allPeople = allPeople.filter(person=>person.id != removeId)
     }
     const newPerson = {
       name,
       number,
-
     };
     phonebookService
       .create(newPerson)
-      .then((res) => setPersons([...persons, res]))
+      .then((res) => setPersons([...allPeople, res]))
       .catch((err) => console.log("add new person failed: ", err));
   };
 
