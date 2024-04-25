@@ -6,7 +6,7 @@ import {
   extractIcon,
   extractTemp,
   extractWind,
-} from "../service/openweather";
+} from "../../service/openweather";
 
 const Display = ({ info }) => {
     // console.log(info)

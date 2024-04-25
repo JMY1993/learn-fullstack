@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import './index.css';
+import './index.css';
 import {
   getAll as getAllCountries,
   wash,
@@ -10,8 +10,8 @@ import {
   extractName,
 } from "./service/restcountries";
 
-import Search from "./components/Search";
-import Display from "./components/Display";
+import Search from "./components/Search/Search";
+import Display from "./components/Display/Display";
 import { nanoid } from "nanoid";
 
 const App = () => {

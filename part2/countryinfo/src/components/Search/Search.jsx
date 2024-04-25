@@ -13,7 +13,7 @@ const Search = ({ list, handleShow }) => {
       ? []
       : list.filter(
           (country) =>
-            country.name.toLowerCase().includes(searchValue.toLowerCase()) &&
+            country.name.toLowerCase().includes(searchValue.toLowerCase()) || 
             country.official.toLowerCase().includes(searchValue.toLowerCase())
         );
   const searchResultJsx = (
@@ -37,7 +37,7 @@ const Search = ({ list, handleShow }) => {
     <div>
       <div>
         find countries:
-        <input type="text" value={searchValue} onChange={handleSearch} />
+        <input className={"search-input"} type="text" value={searchValue} onChange={handleSearch} />
       </div>
       {searchResultJsx}
     </div>
